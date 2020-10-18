@@ -1,0 +1,117 @@
+<html>
+
+<head>
+  <style>
+    td {
+      width: 40px;
+      height: 40px;
+      border: 1px solid black;
+    }
+
+    table {
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+  </style>
+  <script src="FetchPromise.js"></script>
+</head>
+
+<body onload="init()">
+  <div id='base'>
+    <h1>Latest Weather Data</h1>
+    <table id='weather'>
+      <thead>
+        <tr>
+          <td>Place</td>
+          <td>Value</td>
+          <td>Type</td>
+          <td>Unit</td>
+          <td>Time</td>
+        </tr>
+      </thead>
+      <tbody id='weather_data'></tbody>
+    </table>
+    <h1>Minimum Temperature Horsens</h1>
+    <table id='temperatureMin'>
+      <thead>
+        <tr>
+          <td>Place</td>
+          <td>Value</td>
+          <td>Type</td>
+          <td>Unit</td>
+          <td>Time</td>
+        </tr>
+      </thead>
+      <tbody id='table_min'></tbody>
+    </table>
+    <h1>Maximum Temperature Horsens</h1>
+    <table id='temperatureMax'>
+      <thead>
+        <tr>
+          <td>Place</td>
+          <td>Value</td>
+          <td>Type</td>
+          <td>Unit</td>
+          <td>Time</td>
+        </tr>
+      </thead>
+      <tbody id='table_max'></tbody>
+    </table>
+    <h1>Sum of precipitation</h1>
+    <table id='precipitation'>
+      <thead>
+        <tr>
+          <td>Place</td>
+          <td>Total</td>
+        </tr>
+      </thead>
+      <tbody id='table_prec'></tbody>
+    </table>
+    <h1>Average Wind Spreed</h1>
+    <table id='wind'>
+      <thead>
+        <tr>
+          <td>Place</td>
+          <td>Average</td>
+        </tr>
+      </thead>
+      <tbody id='table_wind'></tbody>
+    </table>
+    <h1>Dominant Wind Direction</h1>
+    <table id='windDir'>
+      <thead>
+        <tr>
+          <td>Place</td>
+          <td>Direction</td>
+        </tr>
+      </thead>
+      <tbody id='table_windDir'></tbody>
+    </table>
+    <h1>Average Cloud Covarage</h1>
+    <table id='cloud'>
+      <thead>
+        <tr>
+          <td>Place</td>
+          <td>Average</td>
+        </tr>
+      </thead>
+      <tbody id='table_cloud'></tbody>
+    </table>
+    <h1>Hourly predictions for the next 24 hours</h1>
+    <table id='forecast'>
+      <thead>
+        <tr>
+          <td>Place</td>
+          <td>From</td>
+          <td>To</td>
+          <td>Type</td>
+          <td>Unit</td>
+          <td>Time</td>
+        </tr>
+      </thead>
+      <tbody id='forecast_data'></tbody>
+    </table>
+  </div>
+</body>
+
+</html>
