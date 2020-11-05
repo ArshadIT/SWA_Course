@@ -1,8 +1,23 @@
-<html>
-  <head>
-
-  </head>
-  <body>
+<html ng-app='weahterApp'>
+<head> 
+    <title>Weather History</title>
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+        }
+        table {
+            border: 1px solid black;
+            border-spacing: 0;
+        }
+    </style>
+    <script type = 'module'>
+        import 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js'
+        import './components.js'
+    </script>
+</head>
+<body ng-controller="WeatherController">
     
-  </body>
+</body>
 </html>
