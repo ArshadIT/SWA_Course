@@ -6,7 +6,51 @@
   import './init.js'
 </script>
   </head>
-  <body>
+  <body onload='init()'>
+    <br>
+    <br>
+    <hr><h1>Cities data</h1> <hr>
+    <button id="refresh">Refresh</button><br>
+    <button id="reload">Reload</button><br>
+
+    Date from: <input id="weatherDataDateFrom" type="text"><br>
+    Date to: <input id="weatherDataDateTo" type="text"> <br>
+    City: <input id="weatherDataCity" type="text"> <br>
+    <button id="weatherDataUpdate">Update</button> <br> <br>
+
+    <table  id="weather" >
+            <thead><tr><td><b>Place</b></td><td><b>Time</b></td><td><b>Type</b></td><td><b>Unit</b></td><td><b>Value</b></td><td><b>Info</b></td></tr></thead>
+            <tbody id='weatherData'>
+            </tbody>
+    </table>
+
+    Average cloud coverage : <span id="cloudCoverage"></span> %.<br>
+    Total precipitation : <span id="precipitation"></span> mm <br>
+    Average wind speed : <span id="windSpeed"></span> m/s <br>
+    Dominant Wind Direction : <span id="windDirection"></span> <br>
+    Min Temperature : <span id="minTemperature"></span> °C <br>
+    Max Temperature : <span id="maxTemperature"></span> °C <br>
+        <hr>
+    <form>
+        Place: <input type="text" id="newCity">
+        Time:<input type="text" id="newTime">
+        Type: <input type="text" id="newType">
+        Unit:<input type="text" id="newUnit">
+        Value: <input type="text" id="newValue">
+        Info:<input type="text" id="newInfo">
+    </form>
+        <button id="insertData">Add new weather record</button> <br> <br>
+
+        <hr><h1>Forecast</h1><hr>
+        Date from: <input id="forecastDateFrom" type="text"><br>
+        Date to: <input id="forecastDateTo" type="text"> <br>
+        City: <input id="forecastCity" type="text"> <br>
+        <button id="forecastUpdate">Update</button> <br> <br>
     
-  </body>
+        <table  id= "weatherForecast" >
+                <thead><tr><td><b>Place</b></td><td><b>Time</b></td><td><b>Type</b></td><td><b>Unit</b></td><td><b>From</b></td><td><b>To</b></td><td><b>Values</b></td></tr></thead>
+                <tbody id='weatherDataForecast'>
+                </tbody>
+            </table>
+</body>
 </html>
