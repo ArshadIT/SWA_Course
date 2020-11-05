@@ -1,19 +1,17 @@
-// import weatherDataStore from "../store/weatherDataStore.js";
-
-export default store => async ({event_type, ...params}) =>  {
+export default store => async ({event_type, ...p}) =>  {
     switch(event_type) {
         case 'reload':
             const weatherData= await fetch('http://localhost:8080/data').then(res => res.json())
-            store({event_type, ...params, weatherData})
+            store({event_type, ...p, weatherData})
           break;
         case 'refresh':
-            store({event_type, ...params})
+            store({event_type, ...p})
           break;
         case 'update':
-            store({event_type, ...params})
+            store({event_type, ...p})
             break;
         case 'insert':
-            let body = params
+            let body = p
             console.log(body)
             const headers = { 'Content-Type': 'application/json', Accept: 'application/json' }
             const newWeatherData = await fetch('http://localhost:8080/data',
@@ -22,7 +20,7 @@ export default store => async ({event_type, ...params}) =>  {
               body: JSON.stringify(body), 
               headers
             }).then(res => res.json())
-            store({event_type, ...params, newWeatherData})
+            store({event_type, ...p, newWeatherData})
             break;
         default:
       }

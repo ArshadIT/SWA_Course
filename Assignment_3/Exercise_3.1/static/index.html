@@ -9,13 +9,13 @@
   <body onload='init()'>
     <br>
     <br>
-    <hr><h1>Cities data</h1> <hr>
-    <button id="refresh">Refresh</button><br>
-    <button id="reload">Reload</button><br>
+    <hr ><h1 style="text-align: center;">Cities Data</h1> <hr>
+    <button id="refresh">Refresh</button><br><br>
+    <button id="reload">Reload</button><br><br>
 
-    Date from: <input id="weatherDataDateFrom" type="text"><br>
-    Date to: <input id="weatherDataDateTo" type="text"> <br>
-    City: <input id="weatherDataCity" type="text"> <br>
+    Date From <input id="weatherDataDateFrom" type="text"><br>
+    Date To <input id="weatherDataDateTo" type="text"> <br>
+    City <input id="weatherDataCity" type="text" style="color: black;"> <br><br>
     <button id="weatherDataUpdate">Update</button> <br> <br>
 
     <table  id="weather" >
@@ -24,12 +24,12 @@
             </tbody>
     </table>
 
-    Average cloud coverage : <span id="cloudCoverage"></span> %.<br>
-    Total precipitation : <span id="precipitation"></span> mm <br>
-    Average wind speed : <span id="windSpeed"></span> m/s <br>
-    Dominant Wind Direction : <span id="windDirection"></span> <br>
-    Min Temperature : <span id="minTemperature"></span> °C <br>
-    Max Temperature : <span id="maxTemperature"></span> °C <br>
+    Average cloud coverage  <span id="cloudCoverage"></span> %.<br>
+    Total precipitation  <span id="precipitation"></span> mm <br>
+    Average wind speed  <span id="windSpeed"></span> m/s <br>
+    Dominant Wind Direction  <span id="windDirection"></span> <br>
+    Min Temperature  <span id="minTemperature"></span> °C <br>
+    Max Temperature  <span id="maxTemperature"></span> °C <br>
         <hr>
     <form>
         Place: <input type="text" id="newCity">
@@ -41,10 +41,10 @@
     </form>
         <button id="insertData">Add new weather record</button> <br> <br>
 
-        <hr><h1>Forecast</h1><hr>
-        Date from: <input id="forecastDateFrom" type="text"><br>
-        Date to: <input id="forecastDateTo" type="text"> <br>
-        City: <input id="forecastCity" type="text"> <br>
+        <hr><h1 style="text-align: center; text-shadow: black;">Forecast Data</h1><hr>
+        Date From <input id="forecastDateFrom" type="text"><br>
+        Date To <input id="forecastDateTo" type="text"> <br>
+        City    <input id="forecastCity" type="text"> <br>
         <button id="forecastUpdate">Update</button> <br> <br>
     
         <table  id= "weatherForecast" >

@@ -15,3 +15,37 @@ table {
     border-collapse: collapse;
     table-layout : fixed;
 }
+
+#refresh {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+  }
+  
+  #refresh:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  #reload {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+  }
+  
+  #reload:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+  
+
+  #weatherDataUpdate {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+  }
+  
+  #weatherDataUpdate:hover {
+    background-color: #4CAF50;
+    color: white;
+  }

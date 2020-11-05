@@ -7,13 +7,13 @@ const model = (weatherRecords, currentDataRecords) => {
     const addWeather = weather => model(weatherRecords.concat(weather), currentDataRecords.concat(weather))
 
     const getAvgCloudCoverage = () => {
-        let average = arr => (arr.reduce((a,b) => a + b, 0)/arr.length).toFixed(2)
+        let average = arr => (arr.reduce((a,b) => a + b, 0)/arr.length).toFixed(3)
         let data = getCurrentDataType("cloud coverage")
         return average (data.map((el) => el.value))
     }
 
     const getAvgWindSpeed = () => {
-        let average = arr => (arr.reduce((a,b) => a + b, 0)/arr.length).toFixed(2)
+        let average = arr => (arr.reduce((a,b) => a + b, 0)/arr.length).toFixed(3)
         let data = getCurrentDataType("wind speed")
         return average (data.map((el) => el.value))
     }
@@ -21,7 +21,7 @@ const model = (weatherRecords, currentDataRecords) => {
     const getPrecipitation = () => (getCurrentDataType("precipitation")
         .map((el) => parseFloat(el.value))
         .reduce((a,b) => a + b, 0))
-        .toFixed(2) 
+        .toFixed(3) 
     
     const getWindDirection = () => {
         let data = getCurrentDataType("wind speed").reduce((prev, curr) => (prev[curr.direction] = ++prev[curr.direction] || 1, prev), {});
