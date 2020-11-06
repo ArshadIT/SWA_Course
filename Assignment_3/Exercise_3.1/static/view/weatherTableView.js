@@ -46,19 +46,19 @@ export default (window, dispatcher) => {
         theDispatcher(event)
     });
     
-    const addWeather = weather => {
+    const addWeather = w => {
         const tr = document.createElement('tr')
-        tr.insertCell().appendChild(document.createTextNode(weather.place))
-        tr.insertCell().appendChild(document.createTextNode(weather.time))
-        tr.insertCell().appendChild(document.createTextNode(weather.type))
-        tr.insertCell().appendChild(document.createTextNode(weather.unit))
-        tr.insertCell().appendChild(document.createTextNode(weather.value))
+        tr.insertCell().appendChild(document.createTextNode(w.place))
+        tr.insertCell().appendChild(document.createTextNode(w.time))
+        tr.insertCell().appendChild(document.createTextNode(w.type))
+        tr.insertCell().appendChild(document.createTextNode(w.unit))
+        tr.insertCell().appendChild(document.createTextNode(w.value))
 
-        if(weather.precipitation_type){
-            tr.insertCell().appendChild(document.createTextNode(weather.precipitation_type))
+        if(w.precipitation_type){
+            tr.insertCell().appendChild(document.createTextNode(w.precipitation_type))
             }
-        else if(weather.direction){
-                tr.insertCell().appendChild(document.createTextNode(weather.direction))
+        else if(w.direction){
+                tr.insertCell().appendChild(document.createTextNode(w.direction))
             }
             return tr
         }
