@@ -29,7 +29,7 @@ window.init = async function init() {
 
         weatherDataRenderer(weatherDataView(weatherDataModel))
         forecastRenderer(forecastView(forecastModel))
-    } catch (e) {
-        console.log(e)
+    } catch (err) {
+        console.log(err)
     }
 }

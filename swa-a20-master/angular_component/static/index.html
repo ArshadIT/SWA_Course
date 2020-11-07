@@ -20,9 +20,21 @@
 <body ng-controller="EmployeeController">
     <div id='base'>
         <h1>People</h1>
-        <employee-table id='employees' attribute='persons'>
-        </employee-table>
-        <p>Salary: <input ng-model='model.salary'></p>
-    </div>
+        <table id='employees'>
+            <thead><tr><td>Id</td><td>Name</td><td>Employee id</td><td>Salary</td><td>Manager</td></tr></thead>
+            <tbody id='employee_data'>
+                <tr ng-repeat="person in model.persons">
+                    <td>{{person.id}}</td>
+                    <td>{{person.name}}</td>
+                    <td ng-if='person.employeeId'>{{person.employeeId}}</td>
+                    <td ng-if='person.employeeId'>{{person.salary}}</td>
+                    <td ng-if='person.employeeId'>{{person.manager}}</td>
+                    <td colspan='3' ng-if='!person.employeeId'><button ng-click='hire(person.id)'>Hire</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Salary: <model-input property-name='salary'></p>
+            <p>Salary: <model-input property-name='salary'></p>
+            </div>
 </body>
 </html>

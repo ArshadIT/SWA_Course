@@ -1,10 +1,11 @@
-export default store => async({type, ...params}) =>{
+import forecastStore from "../store/forecastStore.js";
+
+export default store => async ({type, ...params}) =>  {
     switch(type) {
         case 'reload':
-            const forcastcastWeatherData = await fetech('http://localhost:8080/forcast')
-            .then(r =>r.json())
-        store({type, ...params, forcastcastWeatherData})
-        break;
+            const forecastWeatherData= await fetch('http://localhost:8080/forecast').then(res => res.json())
+            store({type, ...params, forecastWeatherData})
+          break;
         case 'refresh':
             store({type, ...params})
           break;
@@ -12,5 +13,5 @@ export default store => async({type, ...params}) =>{
             store({type, ...params})
             break;
         default:
-    }
+      }
 }
