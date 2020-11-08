@@ -32,39 +32,30 @@ module.controller('WeatherController', function($http, $scope) {
       .then(({data: forecastRecord}) => {
         $scope.weatherRecord = weatherRecord;
         $scope.forecastRecord = forecastRecord; 
+        console.log('hello world')
+        return;
       })
     })
     .catch(console.err)
   };
-  
 })
 
-function load($scope, $http) {
-  $scope.loadData = function () {
-    $http.get('http://localhost:8080/data')
-    .then(({data: weatherRecord}) => {
-      $http.get('http://localhost:8080/forecast')
-      .then(({data: forecastRecord}) => {
-        $scope.weatherRecord = weatherRecord;
-        $scope.forecastRecord = forecastRecord; 
-      })
-    })
-    .catch(console.err)
-  };
-}
-
-
 module.filter('dateRange', function() {
-  return function(type, city, fromDate, toDate) {
-    var from = new Date(fromDate);
-    var to = new Date(toDate);
-    var itemsInRange = [];
-      for(var i = 0; i < items.length; i++) {
-        var date = new Date(items[i][fieldName]);
-        if(from <= date && date <= to)
-            itemsInRange.push(items[i]);
-    }
-    return itemsInRange;
-};
+  return function(items, fromDate, toDate ) {
+      var filtered = [];
+      var from_date = Date.parse(fromDate);
+      var to_date = Date.parse(toDate);
+      angular.forEach(items, function(item) {
+          if((new Date(item.time) >= new Date(from_date) || !from_date) && (new Date(item.time) <= new Date(to_date) || !to_date))  {
+              filtered.push(item);
+          }
+      });
+      return filtered;
+  };
 });
+ 
+
+
+
+
 
