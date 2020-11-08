@@ -24,8 +24,9 @@
     <input ng-model="search" id="example-ngModel">
     <!-- <div ng-repeat="x in weather | filter:search">{{x.place}}</div> -->
 
-    <input type="date" ng-model="to_date">
     <input type="date" ng-model="from_date">
+    <input type="date" ng-model="to_date">
+    <input type="button" value="Load" ng-click="filterDate(to_date,from_date)" /> <br /><br />
 
     <select ng-model="selectedCity">
         <option value="Horsens" selected="Horsens">Horsens</option>
