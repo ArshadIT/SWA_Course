@@ -59,7 +59,7 @@ module.filter('dateRange', function() {
     var from = new Date(fromDate);
     var to = new Date(toDate);
     var itemsInRange = [];
-    for(var i = 0; i < items.length; i++) {
+      for(var i = 0; i < items.length; i++) {
         var date = new Date(items[i][fieldName]);
         if(from <= date && date <= to)
             itemsInRange.push(items[i]);
