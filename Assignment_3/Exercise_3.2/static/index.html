@@ -13,6 +13,12 @@
             border: 1px solid black;
             border-spacing: 0;
         }
+
+        div.ex1 {
+            width: fit-content;
+            height: 500px;
+            overflow: auto;
+        }
     </style>
     <script type='module'>
         import 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js'
@@ -21,13 +27,12 @@
 </head>
 
 <body ng-controller="WeatherController">
-    <input ng-model="search" id="example-ngModel">
-    <!-- <div ng-repeat="x in weather | filter:search">{{x.place}}</div> -->
 
+    <h2>Filter weather by date</h2>
     <input type="date" ng-model="from_date">
     <input type="date" ng-model="to_date">
-    <input type="button" value="Load" ng-click="filterDate(to_date,from_date)" /> <br /><br />
 
+    <h2>Select city</h2>
     <select ng-model="selectedCity">
         <option value="Horsens" selected="Horsens">Horsens</option>
         <option value="Aarhus" selected="Aarhus">Aarhus</option>
@@ -36,37 +41,70 @@
 
     <div>
 
+        <h2>Add weather record</h2>
+
         Place : <input ng-model="place" /><br /><br />
         Value : <input ng-model="value" /><br /><br />
         Type : <input ng-model="type" /><br /><br />
         Unit : <input ng-model="unit" /><br /><br />
         Time : <input ng-model="time" /><br /><br />
 
-        <input type="button" value="Send" ng-click="postdata(place, value, type, unit, time);loadData()"><br /><br />
+        <input type="button" value="Add" ng-click="postdata(place, value, type, unit, time);loadData()"><br />
+        <h2>Reload site</h2>
         <input type="button" value="Load" ng-click="loadData()" /> <br /><br />
 
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <td>Place</td>
-                <td>Value</td>
-                <td>Type</td>
-                <td>Unit</td>
-                <td>Time</td>
-            </tr>
-        </thead>
-        <tbody id='weather_data'>
-            <tr ng-repeat="data in weatherRecord | filter:selectedCity; ">
-                <td>{{data.place}}</td>
-                <td>{{data.value}}</td>
-                <td>{{data.type}}</td>
-                <td>{{data.unit}}</td>
-                <td>{{data.time}}</td>
-            </tr>
-        </tbody>
-    </table>
+
+    <h2>Weather history</h2>
+    <div class="ex1">
+        <table>
+            <thead>
+                <tr>
+                    <td>Place</td>
+                    <td>Value</td>
+                    <td>Type</td>
+                    <td>Unit</td>
+                    <td>Time</td>
+                </tr>
+            </thead>
+            <tbody id='weather_data'>
+                <tr ng-repeat="data in weatherRecord | filter:selectedCity | dateRange: from_date : to_date;">
+                    <td>{{data.place}}</td>
+                    <td>{{data.value}}</td>
+                    <td>{{data.type}}</td>
+                    <td>{{data.unit}}</td>
+                    <td>{{data.time}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Weather forecast</h2>
+    <div class="ex1">
+        <table>
+            <thead>
+                <tr>
+                    <td>Place</td>
+                    <td>From</td>
+                    <td>to</td>
+                    <td>Type</td>
+                    <td>Unit</td>
+                    <td>Time</td>
+                </tr>
+            </thead>
+            <tbody id='forecast_data'>
+                <tr ng-repeat="data in forecastRecord | filter:selectedCity | dateRange: from_date : to_date; ">
+                    <td>{{data.place}}</td>
+                    <td>{{data.from}}</td>
+                    <td>{{data.to}}</td>
+                    <td>{{data.type}}</td>
+                    <td>{{data.unit}}</td>
+                    <td>{{data.time}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

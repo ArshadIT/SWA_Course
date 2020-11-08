@@ -32,26 +32,27 @@ module.controller('WeatherController', function($http, $scope) {
       .then(({data: forecastRecord}) => {
         $scope.weatherRecord = weatherRecord;
         $scope.forecastRecord = forecastRecord; 
+        console.log('hello world')
+        return;
       })
     })
     .catch(console.err)
   };
-
-
-  $scope.filterDate = function (dateFrom, dateTo ) {
-    var from_date = dateFrom;
-    var to_date = dateTo;
-    console.log(dateFrom)
-    $scope.weatherRecord.filter(el => 
-   ((new Date(el.time) >= new Date(from_date) || !from_date) && (new Date(el.time) <= new Date(to_date) || !to_date)))
-
-   
-   $scope.weatherRecord = $scope.weatherRecord.filter(el => 
-    ((new Date(el.time) >= new Date(from_date) || !from_date) && (new Date(el.time) <= new Date(to_date) || !to_date)))
-    console.log( $scope.weatherRecord)
-  };
 })
 
+module.filter('dateRange', function() {
+  return function(items, fromDate, toDate ) {
+      var filtered = [];
+      var from_date = Date.parse(fromDate);
+      var to_date = Date.parse(toDate);
+      angular.forEach(items, function(item) {
+          if((new Date(item.time) >= new Date(from_date) || !from_date) && (new Date(item.time) <= new Date(to_date) || !to_date))  {
+              filtered.push(item);
+          }
+      });
+      return filtered;
+  };
+});
  
 
 
