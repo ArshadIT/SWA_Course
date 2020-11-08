@@ -1,19 +1,12 @@
 td {
-    width: 100%;
-    height: 40px;
-    border: 1px solid black;
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
 }
+
 table {
-    border: 1px solid black;
-    border-spacing: 0;
-    display:block;
-    max-width:100%;
-    height: 500px;
-    overflow-x: auto;
-    overflow-y:scroll;
-    border: 1px black solid;
-    border-collapse: collapse;
-    table-layout : fixed;
+  border: 1px solid black;
+  border-spacing: 0;
 }
 
 #refresh {
@@ -48,4 +41,11 @@ table {
   #weatherDataUpdate:hover {
     background-color: #4CAF50;
     color: white;
+  }
+
+
+  div.ex1 {
+      width: fit-content;
+      height: 500px;
+      overflow: auto;
   }
