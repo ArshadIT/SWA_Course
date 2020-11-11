@@ -23,6 +23,13 @@
     <script type='module'>
         import 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js'
         import './components.js'
+
+        function mode(arr){
+        return arr.sort((a,b) =>
+          arr.filter(v => v===a).length
+        - arr.filter(v => v===b).length
+        ).pop();
+        }
     </script>
 </head>
 
@@ -79,6 +86,25 @@
             </tbody>
         </table>
     </div>
+
+    Average cloud coverage <span
+        ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | averageCloud;">{{data}}</span>
+    %.<br>
+    Total precipitation <span
+        ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | totalPrec;">{{data}}</span>
+    mm <br>
+    Average wind speed <span
+        ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | averageWind;">{{data}}</span>
+    m/s <br>
+    Dominant Wind Direction <span
+        ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | direction;">{{data}}</span>
+    <br>
+    Min Temperature <span
+        ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | minTemp;">{{data}}</span>
+    °C <br>
+    Max Temperature <span
+        ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | maxTemp;">{{data}}</span>
+    °C <br>
 
     <h2>Weather forecast</h2>
     <div class="ex1">
