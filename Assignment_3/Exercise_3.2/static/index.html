@@ -87,22 +87,22 @@
         </table>
     </div>
 
-    Average cloud coverage <span
+    Average cloud coverage: <span
         ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | averageCloud;">{{data}}</span>
     %.<br>
-    Total precipitation <span
+    Total precipitation: <span
         ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | totalPrec;">{{data}}</span>
     mm <br>
-    Average wind speed <span
+    Average wind speed: <span
         ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | averageWind;">{{data}}</span>
     m/s <br>
-    Dominant Wind Direction <span
+    Dominant Wind Direction: <span
         ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | direction;">{{data}}</span>
     <br>
-    Min Temperature <span
+    Min Temperature: <span
         ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | minTemp;">{{data}}</span>
     °C <br>
-    Max Temperature <span
+    Max Temperature: <span
         ng-repeat="data in weatherRecord| filter:selectedCity | dateRange: from_date : to_date | maxTemp;">{{data}}</span>
     °C <br>
 
