@@ -1,8 +1,47 @@
 <html>
-  <head>
 
-  </head>
-  <body>
-    
-  </body>
+<head>
+
+<script type='module'>
+    import './init.js'
+    </script>
+  <style>
+   table, th, td {
+  border: 1px solid black;
+}
+
+table {
+  width: 100%;
+}
+  </style>
+  <title><strong> Subscribe--Unsubscribe</title>
+</head>
+
+<body onload="load()">
+  <button id="subscribe">Unsubscribe</button> <br> <br>
+  Severity: <input id="severity" type="text"><button id="update">Update</button> <br>
+  Current min severity: <span id="currentSeverity"></span><br>
+
+  <table id="warningsInfo">
+    <thead>
+      <tr>
+        <td><b>Status</b></td>
+        <td><b>Id</b></td>
+        <td><b>Severity</b></td>
+        <td><b>Place</b></td>
+        <td><b>Time</b></td>
+        <td><b>Type</b></td>
+        <td><b>Unit</b></td>
+        <td><b>From</b></td>
+        <td><b>To</b></td>
+        <td><b>Values</b></td>
+      </tr>
+    </thead>
+    <tbody id='warnings'>
+    </tbody>
+  </table>
+  <br>
+
+</body>
+
 </html>
