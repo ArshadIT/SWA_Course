@@ -1,7 +1,7 @@
 import model from './model.js'
 import view from './view.js'
 
-window.load = () => {
+window.onload = () => {
 
     let subscribed = true
     let min_severity = 0
@@ -51,9 +51,9 @@ window.load = () => {
                     min_view.addWarning(data)
                     min_model.addWarning(data)
                 }
-          }
+            }
 
-      }
+        }
     }
 
     function getArrData(warnings) {
