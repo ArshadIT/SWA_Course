@@ -2,27 +2,33 @@
 
 <head>
     <script type="module">
-        import { Observable, fromEvent, from } from 'https://dev.jspm.io/rxjs@6/_esm2015';
-        import { map, filter } from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
+        import { of, Observable } from 'https://dev.jspm.io/rxjs@6/_esm2015';
+        import { delay, tap, mergeMap, repeat, map, filter} from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
 
         window.load = () => {
 
             let url = 'http://localhost:8080/warnings'
 
-            let observable = Observable.create(observer => {fetch(url)
-                .then(res => {return res.json();})
-                .then(body => {observer.next(body);observer.complete();})
-                .catch(err => observer.error(err));
-            })
-        
-            observable.subscribe(v => { console.log(v) });
+            const display = response => {
+                document.open();
+                document.write(response.time);
+            };
+
+            const poll = of({}).pipe(
+                mergeMap(_ => fetch(url).then(res => { return res.json(); })),
+                tap(display),
+                delay(3000),
+                repeat()
+            );
+
+            poll.subscribe();
+
         }
     </script>
 </head>
 
 <body onload="load()">
-    <input><button>Add</button>
-    <ul></ul>
+    <button onclick="poll.unsubscribe();"></button>
 </body>
 
 </html>
