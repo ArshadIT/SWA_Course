@@ -10,7 +10,7 @@ const view = (window, currentSeverity) => {
     }
 
     const addWarning = w => {
-        const tr = document.createElement('tr')
+        const tr = document.createElement('tr')        
         let prediction = w.prediction
 
         tr.insertCell().appendChild(document.createTextNode("NEW"))
