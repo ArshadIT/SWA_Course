@@ -14,9 +14,20 @@ const partition = p => xs => {
         else
             negative.push(x)
     })
-    return { positive, negative }
+    return {
+        positive,
+        negative
+    }
 }
 const range = n => [...Array(n).keys()]
 
 const pipe = (...fs) => x => fs.reduce((arg, f) => f(arg), x)
-module.exports = {flatten, flatMap, range, pipe, findIndeces, partition, findLast}
+module.exports = {
+    flatten,
+    flatMap,
+    range,
+    pipe,
+    findIndeces,
+    partition,
+    findLast
+}

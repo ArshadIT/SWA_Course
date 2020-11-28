@@ -157,4 +157,4 @@ If the client is already subscribed the message will be ignored.
 ### `"unsubscribe"`
 The server will stop sending messages. No confirmation is send.
 
-If the client isn't subscribed the message will be ignored.
+If the client isn't subscribed the message will be ignored......

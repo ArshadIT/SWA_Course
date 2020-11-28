@@ -2,15 +2,20 @@ const express = require('express')
 const body_parser = require('body-parser')
 const WebSocket = require('ws')
 const generator = require('./model/generate.js')
-const { alert } = require('./model/model.js')
-const { partition, findLast } = require('./util/utils.js')
+const {
+    alert
+} = require('./model/model.js')
+const {
+    partition,
+    findLast
+} = require('./util/utils.js')
 
 const web_service_port = 8080
 const web_socket_port = 8090
 
 const app = express()
 app.use(body_parser.json())
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, User-Agent");
     res.header("Access-Control-Allow-Methods", "GET, POST, PATCH");
@@ -18,7 +23,10 @@ app.use(function(req, res, next) {
 });
 app.use(express.static('static'))
 
-const wss = new WebSocket.Server({ port: web_socket_port, path: '/warnings' })
+const wss = new WebSocket.Server({
+    port: web_socket_port,
+    path: '/warnings'
+})
 
 let alert_id = 1
 const create_alerts = predictions => {
@@ -26,20 +34,33 @@ const create_alerts = predictions => {
     alert_id += alerts.length
     return alerts
 }
-  
+
 const start_time = new Date()
 const data = generator.generate_historic_data(start_time)
 let forecast = generator.generate_forecast(start_time)
 const alerts = create_alerts(forecast)
-let historic_alerts = { [ start_time.getTime() ]: alerts.slice() }
+let historic_alerts = {
+    [start_time.getTime()]: alerts.slice()
+}
 
 const update_alerts = (forecast, time) => {
-    const match_alerts = alerts.map((alert, idx) => ({ idx, new_prediction: forecast.find(alert.matches)}))
-    const { positive: updated_alerts, negative: cancelled_alerts } = partition(t => t.new_prediction && generator.alertable(t.new_prediction))(match_alerts)
+    const match_alerts = alerts.map((alert, idx) => ({
+        idx,
+        new_prediction: forecast.find(alert.matches)
+    }))
+    const {
+        positive: updated_alerts,
+        negative: cancelled_alerts
+    } = partition(t => t.new_prediction && generator.alertable(t.new_prediction))(match_alerts)
     const unalerted = forecast.filter(p => !alerts.some(a => a.matches(p)))
 
-    cancelled_alerts.forEach(({idx}) => alerts[idx] = alerts[idx].cancelled())
-    updated_alerts.forEach(({idx, new_prediction}) => alerts[idx] = alerts[idx].updated(new_prediction))
+    cancelled_alerts.forEach(({
+        idx
+    }) => alerts[idx] = alerts[idx].cancelled())
+    updated_alerts.forEach(({
+        idx,
+        new_prediction
+    }) => alerts[idx] = alerts[idx].updated(new_prediction))
     alerts.push(...create_alerts(unalerted))
 
     historic_alerts[time.getTime()] = alerts.slice()
@@ -52,18 +73,23 @@ const regenerate_forecast = () => {
     return forecast = new_forecast
 }
 
-const warnings = alerts => ({ time: new Date(), warnings: alerts })
+const warnings = alerts => ({
+    time: new Date(),
+    warnings: alerts
+})
 
 app.get('/data', (_, res) => {
     res.send(data)
 })
 
 app.get('/data/:place', (req, res) => {
-    res.send(data.filter(({place}) => place === req.params.place))
+    res.send(data.filter(({
+        place
+    }) => place === req.params.place))
 })
 
 app.post('/data', (req, res) => {
-    data.push(...[].concat(req.body))
+    data.push([].concat(req.body))
     res.status(201)
     res.send()
 })
@@ -73,7 +99,9 @@ app.get('/forecast', (_, res) => {
 })
 
 app.get('/forecast/:place', (req, res) => {
-    res.send(forecast.filter(({place}) => place === req.params.place))
+    res.send(forecast.filter(({
+        place
+    }) => place === req.params.place))
 })
 
 app.get('/warnings', (_, res) => {
@@ -81,7 +109,9 @@ app.get('/warnings', (_, res) => {
 })
 
 app.get('/warnings/:id', (req, res) => {
-    const alert = alerts.find(({id}) => id == req.params.id)
+    const alert = alerts.find(({
+        id
+    }) => id == req.params.id)
     if (alert)
         res.send(alert)
     else {
@@ -117,20 +147,19 @@ function update_periodically() {
         if (old_alerts) {
             alerts
                 .filter(a => !old_alerts.some(a.equals))
-                .forEach(alert => 
-                    [...wss.clients]
-                        .filter(client => client.readyState === WebSocket.OPEN && client.subscribed)
-                        .forEach( client => client.send(JSON.stringify(alert)) )
+                .forEach(alert => [...wss.clients]
+                    .filter(client => client.readyState === WebSocket.OPEN && client.subscribed)
+                    .forEach(client => client.send(JSON.stringify(alert)))
                 )
         }
-    }, update_frequency_seconds * 1000)
+    }, update_frequency_seconds * 10)
 }
 
 update_periodically()
 
 wss.on('connection', (ws, req) => {
     ws.on('message', message => {
-        switch(message) {
+        switch (message) {
             case 'subscribe':
                 if (!ws.subscribed) {
                     ws.subscribed = true
@@ -146,5 +175,4 @@ wss.on('connection', (ws, req) => {
     })
     ws.on('close', () => ws.subscribed = false)
 })
-
 app.listen(web_service_port, () => console.log("Server started on", web_service_port, "at", start_time.toString()))

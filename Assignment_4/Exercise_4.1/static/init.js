@@ -1,7 +1,7 @@
 import model from './model.js'
 import view from './view.js'
 import{ajax}from"http://dev.jspm.io/rxjs@6.5.3/_esm2015/ajax/index.js"
-import { Observer, from, of} from 'https://dev.jspm.io/rxjs@6/_esm2015';
+import { from, of} from 'https://dev.jspm.io/rxjs@6/_esm2015';
 import { map,concatMap, delay, tap, mergeMap, repeat} from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
 
 window.onload = () => {
@@ -13,7 +13,7 @@ window.onload = () => {
     let min_view = view(window, min_severity)
     let min_model = model()
 
-
+    getData();
     min_view.getUpdateButton().onclick = () => {
         min_severity = parseInt(min_view.getSeverity())
         min_view.updateSeverity(min_severity)
@@ -41,10 +41,9 @@ window.onload = () => {
     }
 
     function getData() {
-            const display = response => {
-                const data = response
-                if (data !== undefined) {
-                    getArrData(data)
+            const display = (data) => {
+                if (data.warnings !== undefined) {
+                    getArrData(data.warnings)
                 } else if ((data.prediction != null || data.prediction != undefined) && data.severity > min_severity) {
                     if (min_model.exists(data)) {
                         if (min_model.isChanged(data)) {
@@ -60,9 +59,6 @@ window.onload = () => {
 
             const poll = of({}).pipe(
                 concatMap(() => from(fetch(url).then(r => r.json()))), //make api call
-                map(response => response.warnings),                                // get warnings from array
-                map(response => response.filter(r => r.severity > min_severity)),   // filter severity
-                map(response => response.filter(r => min_model.exists(r) == false)),
                 tap(display),
                 delay(3000),
                 repeat(),

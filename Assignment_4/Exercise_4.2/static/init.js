@@ -41,6 +41,7 @@ window.onload = () => {
             let data = JSON.parse(event.data)
             if (data['warnings'] !== undefined) {
                 getArrData(data['warnings'])
+                console.log(data['warnings'])
             } else if ((data.prediction != null || data.prediction != undefined) && data.severity > min_severity) {
                 if (min_model.exists(data)) {
                     if (min_model.isChanged(data)) {
