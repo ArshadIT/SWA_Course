@@ -1,4 +1,8 @@
-const {pipe, flatMap, range} = require('./utils.js')
+const {
+    pipe,
+    flatMap,
+    range
+} = require('./utils.js')
 
 const ms_per_hour = 60 * 60 * 1000
 const ms_per_day = 24 * ms_per_hour

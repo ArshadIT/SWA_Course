@@ -1,34 +1,47 @@
 <html>
 
 <head>
-    <script type="module">
-        import { of, Observable } from 'https://dev.jspm.io/rxjs@6/_esm2015';
-        import { delay, tap, mergeMap, repeat, map, filter} from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
-
-        window.load = () => {
-
-            let url = 'http://localhost:8080/warnings'
-
-            const display = response => {
-                document.open();
-                document.write(response.time);
-            };
-
-            const poll = of({}).pipe(
-                mergeMap(_ => fetch(url).then(res => { return res.json(); })),
-                tap(display),
-                delay(3000),
-                repeat()
-            );
-
-            poll.subscribe();
-
-        }
+<h1 > Subscribe ------ Unsubscribe</h1>
+<script type='module'>
+    import './init.js'
     </script>
+  <style>
+   table, th, td {
+  border: 1px solid brown;
+}
+
+table {
+  width: 100%;
+}
+  </style>
+  <title><strong> Subscribe--Unsubscribe </strong></title>
 </head>
 
 <body onload="load()">
-    <button onclick="poll.unsubscribe();"></button>
+  <button id="subscribe">Unsubscribe</button> <br> <br>
+  Severity: <input id="severity" type="text"><button id="update">Update</button> <br>
+  Current min severity: <span id="currentSeverity"></span><br>
+
+  <table id="warningsInfo">
+    <thead>
+      <tr>
+        <td><b>Status</b></td>
+        <td><b>Id</b></td>
+        <td><b>Severity</b></td>
+        <td><b>Place</b></td>
+        <td><b>Time</b></td>
+        <td><b>Type</b></td>
+        <td><b>Unit</b></td>
+        <td><b>From</b></td>
+        <td><b>To</b></td>
+        <td><b>Values</b></td>
+      </tr>
+    </thead>
+    <tbody id='warnings'>
+    </tbody>
+  </table>
+  <br>
+
 </body>
 
 </html>
