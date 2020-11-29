@@ -9,11 +9,13 @@ window.onload = () => {
     let min_view = view(window, min_severity)
     let min_model = model()
 
+    // set min severity
     min_view.getUpdateButton().onclick = () => {
         min_severity = parseInt(min_view.getSeverity())
         min_view.updateSeverity(min_severity)
     }
 
+    // buttons to toggle severity
     min_view.getSubscribeButton().onclick = () => {
         if (subscribed) {
             subscribed = false;
@@ -27,15 +29,18 @@ window.onload = () => {
 
     }
 
+    // subcribes to sockets 
     const subscribe = () => {
         sock.send('subscribe')
         getData(sock)
     }
 
+    // unsubcribes to sockets
     const unsubscribe = () => {
         sock.send('unsubscribe')
     }
 
+    // gets data from socket
     function getData(sock) {
         sock.onmessage = function (event) {
             let data = JSON.parse(event.data)
