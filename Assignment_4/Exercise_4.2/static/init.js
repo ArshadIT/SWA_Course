@@ -9,11 +9,13 @@ window.onload = () => {
     let min_view = view(window, min_severity)
     let min_model = model()
 
+    // set min severity
     min_view.getUpdateButton().onclick = () => {
         min_severity = parseInt(min_view.getSeverity())
         min_view.updateSeverity(min_severity)
     }
 
+    // buttons to toggle severity
     min_view.getSubscribeButton().onclick = () => {
         if (subscribed) {
             subscribed = false;
@@ -27,21 +29,23 @@ window.onload = () => {
 
     }
 
+    // subcribes to sockets 
     const subscribe = () => {
         sock.send('subscribe')
         getData(sock)
     }
 
+    // unsubcribes to sockets
     const unsubscribe = () => {
         sock.send('unsubscribe')
     }
 
+    // gets data from socket
     function getData(sock) {
         sock.onmessage = function (event) {
             let data = JSON.parse(event.data)
             if (data['warnings'] !== undefined) {
-                getArrData(data['warnings'])
-                console.log(data['warnings'])
+                console.log(undefined)
             } else if ((data.prediction != null || data.prediction != undefined) && data.severity > min_severity) {
                 if (min_model.exists(data)) {
                     if (min_model.isChanged(data)) {
@@ -55,15 +59,6 @@ window.onload = () => {
             }
 
         }
-    }
-
-    function getArrData(warnings) {
-        //To be changed
-        warnings
-            .filter(warning => warning.prediction != null || warning.prediction != undefined)
-            .filter(warning => warning.severity > min_severity)
-            .map(warning => min_model.addWarning(warning))
-            .map(warning => min_view.addWarning(warning))
     }
 
     // On load

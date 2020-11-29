@@ -4,7 +4,7 @@
 <h1 > Subscribe ------ Unsubscribe</h1>
 <script type='module'>
     import './init.js'
-    </script>
+  </script>
   <style>
    table, th, td {
   border: 1px solid brown;
@@ -18,8 +18,10 @@ table {
 </head>
 
 <body onload="load()">
-  <button id="subscribe">Unsubscribe</button> <br> <br>
+  <input type="checkbox" id="toggle" checked> Check/uncheck to subscribe/unsubscribe<br>
+
   Severity: <input id="severity" type="text"><button id="update">Update</button> <br>
+
   Current min severity: <span id="currentSeverity"></span><br>
 
   <table id="warningsInfo">

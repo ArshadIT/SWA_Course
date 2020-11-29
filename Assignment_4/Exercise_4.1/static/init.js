@@ -1,79 +1,61 @@
 import model from './model.js'
 import view from './view.js'
-import{ajax}from"http://dev.jspm.io/rxjs@6.5.3/_esm2015/ajax/index.js"
-import { from, of} from 'https://dev.jspm.io/rxjs@6/_esm2015';
-import { map,concatMap, delay, tap, mergeMap, repeat} from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
+import {fromEvent, from, of} from 'https://dev.jspm.io/rxjs@6/_esm2015';
+import {filter, flatMap, startWith, takeUntil ,map,concatMap, delay, tap, mergeMap, repeat} from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
 
 window.onload = () => {
-
     let url = 'http://localhost:8080/warnings'
-    let subscribed = true
     let min_severity = 0
 
     let min_view = view(window, min_severity)
     let min_model = model()
 
-    getData();
+    var toggle = document.getElementById('toggle');
+
+    // set min severity
     min_view.getUpdateButton().onclick = () => {
-        min_severity = parseInt(min_view.getSeverity())
-        min_view.updateSeverity(min_severity)
-    }
+    min_severity = parseInt(min_view.getSeverity())
+    min_view.updateSeverity(min_severity)
+}
 
-    min_view.getSubscribeButton().onclick = () => {
-        if (subscribed) {
-            subscribed = false;
-            min_view.getSubscribeButton().textContent = 'Subscribe'
-            unsubscribe()
-        } else {
-            subscribed = true;
-            min_view.getSubscribeButton().textContent = 'Unsubscribe'
-            subscribe()
-        }
 
-    }
-
-    const subscribe = () => {
-        getData();
-    }
-
-    const unsubscribe = () => {
-        
-    }
-
-    function getData() {
-            const display = (data) => {
-                if (data.warnings !== undefined) {
-                    getArrData(data.warnings)
-                } else if ((data.prediction != null || data.prediction != undefined) && data.severity > min_severity) {
-                    if (min_model.exists(data)) {
-                        if (min_model.isChanged(data)) {
-                            min_view.updateWarning(data, min_model.getWarning(data.id))
-                            min_model.updateWarning(data)
-                        }
-                    } else {
-                        min_view.addWarning(data)
-                        min_model.addWarning(data)
-                    }
+    // displays the view
+    const display = (data) => {
+        data.map((data) => {
+            if (min_model.exists(data)) {
+                if (min_model.isChanged(data)) {
+                    min_view.updateWarning(data, min_model.getWarning(data.id))
+                    min_model.updateWarning(data)
                 }
-            };
+            } else {
+                min_view.addWarning(data)
+                min_model.addWarning(data)
+            }
+        })
+    };
 
-            const poll = of({}).pipe(
-                concatMap(() => from(fetch(url).then(r => r.json()))), //make api call
-                tap(display),
-                delay(3000),
-                repeat(),
-            );
+    // Creates Rxjs polling
+    const poll = of ({}).pipe(
+        concatMap(() => from(fetch(url).then(r => r.json()))), //make api call
+        map(response => response.warnings), // get warnings from array
+        map(response => response.filter(r => r.severity > min_severity)), // filter severity
+        tap(display), // takes response data to the display function above
+        delay(3000), // adds delay 
+        repeat() // repeat the polling
+    );
+    
+    // toggles the subscribtion
+    var toggleStream = fromEvent(toggle, 'change').pipe(
+        map(e => e.target.checked));
 
-            poll.subscribe();
-    }
+    // shows the result
+    var resultStream = toggleStream.pipe(
+        filter(x => x === true),
+        startWith(true),
+        flatMap(() => poll.pipe(takeUntil(toggleStream))),
+        );
 
-    function getArrData(warnings) {
-        //To be changed
-        warnings
-            .filter(warning => warning.prediction != null || warning.prediction != undefined)
-            .filter(warning => warning.severity > min_severity)
-            .map(warning => min_model.addWarning(warning))
-            .map(warning => min_view.addWarning(warning))
-    }
+    resultStream.subscribe(x => display.innerText += x)
+  
 
 }
