@@ -1,11 +1,10 @@
 import model from './model.js'
 import view from './view.js'
 import{ajax}from"http://dev.jspm.io/rxjs@6.5.3/_esm2015/ajax/index.js"
-import { from, of} from 'https://dev.jspm.io/rxjs@6/_esm2015';
+import { fromEvent, from, of} from 'https://dev.jspm.io/rxjs@6/_esm2015';
 import { map,concatMap, delay, tap, mergeMap, repeat} from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
 
-window.onload = () => {
-
+window.onload = (event) => {
     let url = 'http://localhost:8080/warnings'
     let subscribed = true
     let min_severity = 0
@@ -42,38 +41,29 @@ window.onload = () => {
 
     function getData() {
             const display = (data) => {
-                if (data.warnings !== undefined) {
-                    getArrData(data.warnings)
-                } else if ((data.prediction != null || data.prediction != undefined) && data.severity > min_severity) {
-                    if (min_model.exists(data)) {
-                        if (min_model.isChanged(data)) {
-                            min_view.updateWarning(data, min_model.getWarning(data.id))
-                            min_model.updateWarning(data)
+                    data.map((data) => {
+                        if (min_model.exists(data)) {
+                            if (min_model.isChanged(data)) {
+                                min_view.updateWarning(data, min_model.getWarning(data.id))
+                                min_model.updateWarning(data)
+                            }
+                        } else {
+                            min_view.addWarning(data)
+                            min_model.addWarning(data)
                         }
-                    } else {
-                        min_view.addWarning(data)
-                        min_model.addWarning(data)
-                    }
-                }
+                      })
             };
 
             const poll = of({}).pipe(
                 concatMap(() => from(fetch(url).then(r => r.json()))), //make api call
+                map(response => response.warnings),                                 // get warnings from array
+                map(response => response.filter(r => r.severity > min_severity)),   // filter severity
                 tap(display),
                 delay(3000),
                 repeat(),
             );
 
             poll.subscribe();
-    }
-
-    function getArrData(warnings) {
-        //To be changed
-        warnings
-            .filter(warning => warning.prediction != null || warning.prediction != undefined)
-            .filter(warning => warning.severity > min_severity)
-            .map(warning => min_model.addWarning(warning))
-            .map(warning => min_view.addWarning(warning))
-    }
+    }    
 
 }

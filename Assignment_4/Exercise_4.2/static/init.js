@@ -40,8 +40,7 @@ window.onload = () => {
         sock.onmessage = function (event) {
             let data = JSON.parse(event.data)
             if (data['warnings'] !== undefined) {
-                getArrData(data['warnings'])
-                console.log(data['warnings'])
+                console.log(undefined)
             } else if ((data.prediction != null || data.prediction != undefined) && data.severity > min_severity) {
                 if (min_model.exists(data)) {
                     if (min_model.isChanged(data)) {
@@ -55,15 +54,6 @@ window.onload = () => {
             }
 
         }
-    }
-
-    function getArrData(warnings) {
-        //To be changed
-        warnings
-            .filter(warning => warning.prediction != null || warning.prediction != undefined)
-            .filter(warning => warning.severity > min_severity)
-            .map(warning => min_model.addWarning(warning))
-            .map(warning => min_view.addWarning(warning))
     }
 
     // On load
