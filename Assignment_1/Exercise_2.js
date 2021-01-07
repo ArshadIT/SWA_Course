@@ -1,3 +1,6 @@
+/*
+ In this part of assignment we are using prototype, constructor and class key word(prototypical inheritance)
+*/
 // weather event
 class WeatherEvent {
     constructor(date, place, type, unit) {
@@ -8,6 +11,7 @@ class WeatherEvent {
     }
 }
 
+// prototype function
 WeatherEvent.prototype.time = function () {
     return this.date;
 }
@@ -28,7 +32,7 @@ WeatherEvent.prototype.setUnit = function (_unit) {
     this.unit=_unit;
 }
 
-// data interval
+// data interval by using class key you can only inheritance object like this.
 class DateInterval {
     constructor(to, from) {
         this.to = to;

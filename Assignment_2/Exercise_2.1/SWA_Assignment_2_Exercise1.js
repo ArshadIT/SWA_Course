@@ -1,4 +1,4 @@
-const pipe = (...fs) => x => fs.reduce((y, f) => f(y), x)
+/**const pipe = (...fs) => x => fs.reduce((y, f) => f(y), x)
 
 // Concatenative inheritance mixin style
 
@@ -88,3 +88,4 @@ const temperature_creator = (time, place, unit, value) =>
 
 const temp_obj = temperature_creator('Now', 'Horsens', 'C', 12)({})
 console.log(temp_obj.convertToC()().getValue())
+**/

@@ -1,4 +1,9 @@
-// Weather Assignment part 1, factory function  
+// Weather Assignment part 1, factory function 
+/*
+In project we are using factory function , OOP without using class key, constructors. we use concatenative inheritance 
+to make a copy of object.
+
+*/
 function Event(date, _place) {
     const time = () => date;
     const place = () => _place;
@@ -27,11 +32,11 @@ function WeatherData(number, date, place, type, unit) {
     return Object.assign({
         value,
         setValue
-    }, Event(date, place), DataType(type, unit))
+    }, Event(date, place), DataType(type, unit))  // Object assign use to copy the values from one source object to target object
 }
 
 // wind 
-function Wind(direction, number, date, place, type, unit) {
+function Wind(direction, number, date, place, type, unit) {   // wind are our source object
     const getDirection = () => direction;
 
     function convertToMPH() {
@@ -43,9 +48,9 @@ function Wind(direction, number, date, place, type, unit) {
     }
     return Object.assign({ 
         getDirection,
-        convertToMPH,
+        convertToMPH,      // return values that prints later
         convertToMS
-    }, WeatherData(number, date, place, type, unit))
+    }, WeatherData(number, date, place, type, unit))  // target object is weather data
 }
 
 
@@ -106,6 +111,10 @@ function DateInterval(dateFrom, dateTo) {
 }
 
 // weather history
+/**
+ * 
+ weather history takes the array of weatherDataCollection and return the required array values
+ */
 function WeatherHistory(weatherDataCollection) {
     let place;
     let type;
@@ -175,6 +184,7 @@ function WeatherHistory(weatherDataCollection) {
 
     function data() {
         for (let i = 0; i < weatherDataCollection.length; i++) {
+            //printing information
             console.log(`City: ${weatherDataCollection[i].place()}| Date: ${weatherDataCollection[i].time()}| Type: ${weatherDataCollection[i].type()}| Value: ${weatherDataCollection[i].value()}| Unit: ${weatherDataCollection[i].unit()}`)
         }
     }
@@ -198,7 +208,7 @@ function WeatherHistory(weatherDataCollection) {
 
 // prediction
 function WeatherPrediction(date, _to, _from, place, type, unit) {
-    const matches = (data) => {
+    const matches = (data) => { // checks the value of dates, type place and unit
         return (data.value() >= this.to && data.value() <= this.from &&
             data.type === this.type && data.place === this.place &&
             data.unit === this.unit);
@@ -235,14 +245,14 @@ function TemperaturePrediction(date, to, from, place, type, unit) {
     return Object.assign({
         convertToF,
         convertToC
-    }, WeatherPrediction(date, to, from, place, type, unit))
+    }, WeatherPrediction(date, to, from, place, type, unit)) // return concatenative inheritance object
 }
 
 // precipitation prediction
 function PrecipitationPrediction(types, date, to, from, place, type, unit) {
     const Types = () => types;
     const matches = (data) => {
-        return (data.value() >= this.to && data.value() <= this.from &&
+        return (data.value() >= this.to && data.value() <= this.from &&   // "this" as call back 
             data.type === this.type && data.place === this.place &&
             data.unit === this.unit);
     };
