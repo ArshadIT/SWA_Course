@@ -130,6 +130,7 @@ function WeatherHistory(weatherDataCollection) {
         period = undefined
     };
 
+    // we are using higher order functions map
     const convertToUSUnits = () => {
         let acc = []
         weatherData.map(d => {

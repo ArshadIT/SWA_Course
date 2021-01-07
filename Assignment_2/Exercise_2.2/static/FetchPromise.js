@@ -1,4 +1,8 @@
-window.init = function() {
+/*
+    This assigment is about assychronous client server programming, fecthing, promises, callbacks.
+*/
+
+window.init = function() { // Using promises
     Promise.all([fetch('http://localhost:8080/data'), fetch('http://localhost:8080/forecast')])
         .then(res => res.map(r => r.json()))
         .then(r => Promise.all(r))

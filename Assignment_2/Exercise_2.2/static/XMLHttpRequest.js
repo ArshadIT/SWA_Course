@@ -1,4 +1,8 @@
-    window.init = function() {
+    /*
+    This assigment is about assychronous client server programming, fecthing, promises, callbacks.
+    */
+    
+    window.init = function() { // assychronous programming, using callbacks XMLHttpRequest, we have one request inside the other
         const request = new XMLHttpRequest()
         request.open('GET', 'http://localhost:8080/data')
         request.send()

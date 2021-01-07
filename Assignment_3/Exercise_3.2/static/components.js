@@ -1,8 +1,14 @@
+// Using AngularJs for two-way databinding 
+// Defining module
+
 const module = angular.module('weahterApp', [])
 
-module.controller('WeatherController', function ($http, $scope) {
-  $scope.postdata = function (place, value, type, unit, time) {
+// Module controller using $scope(application data) and $http
 
+module.controller('WeatherController', function ($http, $scope) {
+
+  // post function
+  $scope.postdata = function (place, value, type, unit, time) {
     var data = {
       place: place,
       value: value,
@@ -20,6 +26,7 @@ module.controller('WeatherController', function ($http, $scope) {
     })
   }
 
+  // assynchronous fecthing data
   $http.get('http://localhost:8080/data')
     .then(({
       data: weatherRecord
@@ -34,6 +41,8 @@ module.controller('WeatherController', function ($http, $scope) {
     })
     .catch(console.err)
 
+
+  // reload function
   $scope.loadData = function () {
     $http.get('http://localhost:8080/data')
       .then(({
@@ -53,6 +62,7 @@ module.controller('WeatherController', function ($http, $scope) {
   };
 })
 
+// filter based on date
 module.filter('dateRange', function () {
   return function (items, fromDate, toDate) {
     var filtered = [];
@@ -67,6 +77,7 @@ module.filter('dateRange', function () {
   };
 });
 
+// filter based on averageCloud
 module.filter('averageCloud', function () {
   return function (items) {
     var total = 0;
@@ -83,6 +94,7 @@ module.filter('averageCloud', function () {
   };
 });
 
+// filter based on totalPrec
 module.filter('totalPrec', function () {
   return function (items) {
     var total = 0;
@@ -97,6 +109,7 @@ module.filter('totalPrec', function () {
   };
 });
 
+// filter based on averagewind
 module.filter('averageWind', function () {
   return function (items) {
     var total = 0;
@@ -111,6 +124,7 @@ module.filter('averageWind', function () {
   };
 });
 
+// filter based on direction
 module.filter('direction', function () {
   return function (items) {
     var filtered = []
@@ -128,6 +142,7 @@ module.filter('direction', function () {
   };
 });
 
+// filter based on minTemp
 module.filter('minTemp', function () {
   return function (items) {
     var filtered = []
@@ -142,6 +157,7 @@ module.filter('minTemp', function () {
   };
 });
 
+// filter based on maxTemp
 module.filter('maxTemp', function () {
   return function (items) {
     var filtered = []
